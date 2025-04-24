@@ -7,6 +7,8 @@ import listingRouter from './routes/listing.route.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import cors from 'cors';
+import fs from 'fs';
+import https from 'https';
 dotenv.config();
 
 mongoose
@@ -55,3 +57,12 @@ app.use(cors({
   origin: 'https://d2e80q0n9i5uj2.cloudfront.net',
   credentials: true,
 }));
+
+const privateKey = fs.readFileSync('/etc/ssl/private/selfsigned.key', 'utf8');
+const certificate = fs.readFileSync('/etc/ssl/certs/selfsigned.crt', 'utf8');
+
+const credentials = { key: privateKey, cert: certificate };
+
+https.createServer(credentials, app).listen(3000, () => {
+    console.log('Backend is now running with HTTPS on port 3000');
+});
