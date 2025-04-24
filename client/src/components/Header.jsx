@@ -13,7 +13,7 @@ export default function Header() {
     
     urlParams.set('searchTerm', searchTerm);
     const searchQuery = urlParams.toString();
-    navigate(`/search?${searchQuery}`);
+    navigate(`http://65.1.246.161:3000/search?${searchQuery}`);
   };
 
   useEffect(() => {
